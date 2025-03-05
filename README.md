@@ -6,10 +6,8 @@ Remove this section, and replace all `{{ variable }}` strings. Write your tasks 
 
 # Ansible Role: {{ Thing }} ([Ludus](https://ludus.cloud))
 
-An Ansible Role that installs [{{ Something }}](https://example.com) on {{ type of host }} and optionally configures [{{ Another Thing }}](https://example).
+An Ansible Role that installs the Splunk Universal Forwader Agent on Windows 
 
-> [!WARNING]
-> This is a warning about something in this role
 
 ## Requirements
 
@@ -19,8 +17,11 @@ None.
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    # This is a comment explaining the variable below
-    ludus_thing_variable1: true
+   splunk_package_url_uf: "https://download.splunk.com/products/universalforwarder/releases/{{ splunk_package_version }}/windows/splunkforwarder-{{ splunk_package_version }}-{{ build_id }}-windows-x64.msi"
+  splunk_package_version: 9.1.3
+  build_id: 6b4ebe426ca6
+  ludus_splunk_server: ""
+  ludus_splunk_server_forwarder_port: 9997
 
 ## Dependencies
 

@@ -1,4 +1,5 @@
----
-# Role variables should all be prefaced with the name of the role to avoid
-# name conflicts with other roles
-ludus_thing_variable1: true
+splunk_package_url_uf: "https://download.splunk.com/products/universalforwarder/releases/{{ splunk_package_version }}/windows/splunkforwarder-{{ splunk_package_version }}-{{ build_id }}-windows-x64.msi"
+splunk_package_version: 9.1.3
+build_id: 6b4ebe426ca6
+ludus_splunk_server: ""
+ludus_splunk_server_forwarder_port: 9997

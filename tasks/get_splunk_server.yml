@@ -1,0 +1,14 @@
+- name: Find VM with splunk as a role
+  ansible.builtin.set_fact:
+    ludus_splunk_vm: "{{ ludus | search_roles('ludus_splunk') }}"
+
+- name: Fail if no splunk server VM found
+  ansible.builtin.fail:
+    msg: "Could not find any VM that has the *.ludus_splunk role in your config"
+  when: ludus_splunk_vm is undefined or ludus_splunk == None or ludus_splunk | length == 0
+
+
+- name: Set the token
+  ansible.builtin.set_fact:
+    ludus_splunk_server:
+      "10.{{ range_second_octet }}.{{ ludus_splunk.vlan }}.{{ ludus_splunk.ip_last_octet }}:{{ ludus_splunk_server_forwarder_port }}"

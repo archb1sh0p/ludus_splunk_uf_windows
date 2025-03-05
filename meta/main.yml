@@ -2,10 +2,10 @@
 dependencies: []
 
 galaxy_info:
-  role_name: ludus_{{ thing }}
-  author: {{ your github username }}
-  description: An Ansible Role that installs {{ Something }} on {{ type of host }} and optionally configures {{ Another Thing }}
-  company: {{ your company or '' }}
+  role_name: ludus_splunk_uf_windows
+  author: archb1sh0p
+  description: An Ansible Role that installs the splunk Universal Forwarder agent on Windows and configures windows to send certain logs
+  company: idk
   license: GPLv3
   min_ansible_version: "2.10"
   platforms:
@@ -13,21 +13,6 @@ galaxy_info:
     # This example includes a lot, see https://github.com/ansible/ansible-lint/blob/main/src/ansiblelint/schemas/meta.json for all possibilities
     - name: Windows 
       versions:
-        - "2012R2"
-        - "2016"
-        - "2019"
-        - "2022"
-    - name: Debian
-      versions:
-        - buster
-        - bullseye
-        - bookworm
-    - name: Ubuntu
-      versions:
-        - bionic
-        - focal
-        - jammy
+        - "all"
   galaxy_tags:
-    - tagswithnospaces
-
-collections: [] # Add any collections needed here
+    - splunk
