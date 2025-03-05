@@ -5,13 +5,11 @@
 
 - name: Download Splunk UF from Splunk website
   win_shell: |
-    [Net.ServicePointManager]::SecurityProtocol = "tls12, tls11, tls"
-    (New-Object System.Net.WebClient).DownloadFile("{{ splunk_package_url_uf }}", "C:\splunkuf.msi")
-
+    wget -O "c:\splunkuf.msi" "https://download.splunk.com/products/universalforwarder/releases/9.4.0/windows/splunkforwarder-9.4.0-6b4ebe426ca6-windows-x64.msi"
 - name: Install Splunk_UF MSI
   win_package:
     path: C:\splunkuf.msi
-    arguments: 'RECEIVING_INDEXER={{ ludus_splunk_server }}:{{ ludus_splunk_server_forwarder_port }} SPLUNKUSERNAME=admin SPLUNKPASSWORD=zmalqp10 WINEVENTLOG_SEC_ENABLE=0 WINEVENTLOG_SYS_ENABLE=0 WINEVENTLOG_APP_ENABLE=0 PRIVILEGESECURITY=1 USE_LOCAL_SYSTEM=1 SPLUNKPASSWORD=Pl3ase-k1Ll-me:p AGREETOLICENSE=YES /quiet'
+    arguments: 'RECEIVING_INDEXER=10.2.10.69:9997 SPLUNKUSERNAME=admin SPLUNKPASSWORD=zmalqp10 WINEVENTLOG_SEC_ENABLE=1 WINEVENTLOG_SYS_ENABLE=1 WINEVENTLOG_APP_ENABLE=1 PRIVILEGESECURITY=1 USE_LOCAL_SYSTEM=1 AGREETOLICENSE=YES /quiet'
 
 - name: Start Splunk
   win_service:
