@@ -1,23 +1,23 @@
 # README
 
-This template includes a task yml for caching downloads to the Ludus host (download_file.yml) as well as GitHub action to push the role to Ansible Galaxy when a tag is created in git. You'll need to get a [Galaxy token](https://galaxy.ansible.com/ui/token/) and set it as `GALAXY_API_KEY` in [Github Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) for the Ansible Galaxy deployment to work correctly.
-
-Remove this section, and replace all `{{ variable }}` strings. Write your tasks in `./tasks/main.yml`
-
-# Ansible Role: {{ Thing }} ([Ludus](https://ludus.cloud))
-
-An Ansible Role that installs the Splunk Universal Forwader Agent on Windows 
+This template downloads and installs the Splunk Unversal Forwader agent on windows. 
 
 
 ## Requirements
 
-None.
+to use localy clone this repo and run the following
+
+```bash
+ludus ansible roles add -d ./ludus_splunk_uf_windows/ --force
+ludus range deploy -t user-defined-roles --limit localhost,JD-ad-win11-22h2-enterprise-x64-1  --only-roles ludus_splunk_uf_windows
+ludus range logs -f
+```
 
 ## Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-   splunk_package_url_uf: "https://download.splunk.com/products/universalforwarder/releases/{{ splunk_package_version }}/windows/splunkforwarder-{{ splunk_package_version }}-{{ build_id }}-windows-x64.msi"
+  splunk_package_url_uf: "https://download.splunk.com/products/universalforwarder/releases/{{ splunk_package_version }}/windows/splunkforwarder-{{ splunk_package_version }}-{{ build_id }}-windows-x64.msi"
   splunk_package_version: 9.1.3
   build_id: 6b4ebe426ca6
   ludus_splunk_server: ""
@@ -30,11 +30,7 @@ None.
 ## Example Playbook
 
 ```yaml
-- hosts: {{ thing }}_hosts
-  roles:
-    - {{ your github username }}.{{ this repo name }}
-  vars:
-    {{ role vars here }}
+tba
 ```
 
 ## Example Ludus Range Config
@@ -54,7 +50,7 @@ ludus:
       fqdn: ludus.domain
       role: primary-dc
     roles:
-      - {{ your github username }}.{{ this repo name }}
+      - "as it appears in `ludus ansible roles list`"
     role_vars:
       {{ example role var usage }}
 ```
