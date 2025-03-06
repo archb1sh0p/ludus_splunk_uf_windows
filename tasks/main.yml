@@ -3,15 +3,32 @@
     file: get_splunk_server.yml
   when: ludus_splunk_server == ""
 
+- name: Check if Splunk UF is installed
+  win_stat:
+    path: "C:\\Program Files\\SplunkUniversalForwarder\\bin\\splunk.exe"
+  register: splunk_installed
+
+- name: Stop Splunk UF if installed
+  win_shell: |
+    & "C:\\Program Files\\SplunkUniversalForwarder\\bin\\splunk.exe" stop
+  when: splunk_installed.stat.exists
+  ignore_errors: yes  # Ignore errors if Splunk is already stopped
+
+- name: Uninstall Splunk UF
+  win_shell: |
+    msiexec /x "C:\\splunkuf.msi" /quiet /norestart
+  when: splunk_installed.stat.exists
+
 - name: Download Splunk UF from Splunk website
   win_shell: |
-    wget -O "c:\splunkuf.msi" "https://download.splunk.com/products/universalforwarder/releases/9.4.0/windows/splunkforwarder-9.4.0-6b4ebe426ca6-windows-x64.msi"
-- name: Install Splunk_UF MSI
+    wget -O "C:\\splunkuf.msi" "https://download.splunk.com/products/universalforwarder/releases/9.4.0/windows/splunkforwarder-9.4.0-6b4ebe426ca6-windows-x64.msi"
+
+- name: Install Splunk UF MSI
   win_package:
     path: C:\splunkuf.msi
     arguments: 'RECEIVING_INDEXER=10.2.10.69:9997 SPLUNKUSERNAME=admin SPLUNKPASSWORD=zmalqp10 WINEVENTLOG_SEC_ENABLE=1 WINEVENTLOG_SYS_ENABLE=1 WINEVENTLOG_APP_ENABLE=1 PRIVILEGESECURITY=1 USE_LOCAL_SYSTEM=1 AGREETOLICENSE=YES /quiet'
 
-- name: Start Splunk
+- name: Start Splunk UF Service
   win_service:
     name: SplunkForwarder
     state: started
