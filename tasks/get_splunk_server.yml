@@ -1,14 +1,22 @@
 - name: Find VM with splunk as a role
   ansible.builtin.set_fact:
-    ludus_splunk_vm: "{{ ludus | search_roles('ludus_splunk') }}"
+    ludus_splunk_vm: "{{ ludus | search_roles('PrymalInstynct.ludus_splunk') }}"
+
+- name: Debug the value of ludus_splunk_vm
+  ansible.builtin.debug:
+    var: ludus_splunk_vm
 
 - name: Fail if no splunk server VM found
   ansible.builtin.fail:
     msg: "Could not find any VM that has the *.ludus_splunk role in your config"
-  when: ludus_splunk_vm is undefined or ludus_splunk_vm | length == 0
-
+  when: ludus_splunk_vm is not defined or ludus_splunk_vm | default('') | length == 0
 
 - name: Set the token
   ansible.builtin.set_fact:
     ludus_splunk_server:
       "10.{{ range_second_octet }}.{{ ludus_splunk_vm.vlan }}.{{ ludus_splunk_vm.ip_last_octet }}:{{ ludus_splunk_server_forwarder_port }}"
+
+- name: Debug the value of ludus_splunk_server
+  ansible.builtin.debug:
+    var: ludus_splunk_server
+
