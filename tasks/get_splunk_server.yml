@@ -11,7 +11,7 @@
     msg: "Could not find any VM that has the *.ludus_splunk role in your config"
   when: ludus_splunk_vm is not defined or ludus_splunk_vm | default('') | length == 0
 
-- name: Set the token
+- name: Set the splunk server
   ansible.builtin.set_fact:
     ludus_splunk_server:
       "10.{{ range_second_octet }}.{{ ludus_splunk_vm.vlan }}.{{ ludus_splunk_vm.ip_last_octet }}:{{ ludus_splunk_server_forwarder_port }}"
